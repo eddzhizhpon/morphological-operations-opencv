@@ -13,7 +13,18 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/imgcodecs/imgcodecs.hpp> 
 #include <opencv2/video/video.hpp> 
-#include <opencv2/videoio/videoio.hpp> 
+#include <opencv2/videoio/videoio.hpp>
+
+#include <QApplication>
+#include <QLabel>
+#include <QWidget>
+#include <QMainWindow>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QGraphicsScene>
+
 
 using namespace std;
 using namespace cv;
@@ -34,19 +45,30 @@ class MorphologicalOperation {
         cv::Mat applyBlackHat(cv::Mat);
         cv::Mat applyEquation(cv::Mat);
 
-        void setKernel(cv::Mat);
+        void createKernel(int);
 
 };
 
-class MainImageGUI {
-
+class MainImageGUI : public QMainWindow {
+    private slots:
+        void handleButton();
     private:
         MorphologicalOperation mo;
         cv::Mat original;
-        void init(int argc, char *argv[]);
+
+        QGridLayout *layout;
+        QGridLayout *imageLayout;
+        QWidget *widget;
+        QWidget *imageWidget;
+        QPushButton *kernelButton;
+        QLineEdit *kernelSize;
+        QGroupBox *imageBox;
 
     public:
-        MainImageGUI(string, int argc, char *argv[]);
+        MainImageGUI(string);
+        int init();
+
+        void addImageToWidget(cv::Mat, QString, int, int);
 
         cv::Mat readImage(string);
         void displayImage(string, cv::Mat);

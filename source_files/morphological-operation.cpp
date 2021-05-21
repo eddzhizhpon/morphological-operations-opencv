@@ -33,6 +33,6 @@ cv::Mat MorphologicalOperation::applyEquation(cv::Mat image){
     return retultImg;
 }
 
-void MorphologicalOperation::setKernel(cv::Mat kernel){
-    this->kernel = kernel;
+void MorphologicalOperation::createKernel(int size){
+    this->kernel = cv::getStructuringElement(MORPH_CROSS, Size(size, size));
 }
