@@ -34,5 +34,8 @@ cv::Mat MorphologicalOperation::applyEquation(cv::Mat image){
 }
 
 void MorphologicalOperation::createKernel(int size){
-    this->kernel = cv::getStructuringElement(MORPH_CROSS, Size(size, size));
+    if (size % 2 != 0 && size != 0)
+        this->kernel = cv::getStructuringElement(MORPH_CROSS, Size(size, size));
+    else 
+        throw int(21);
 }

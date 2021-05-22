@@ -4,4 +4,4 @@ bin
 reports
 *.csv
 *.stash
-*.pro
+# *.pro

@@ -3,10 +3,7 @@
 #include <cstring>
 #include <vector>
 #include <cmath>
-#include <sstream>
-#include <fstream>
 #include <string>
-#include <experimental/filesystem>
 
 #include <opencv2/core/core.hpp> 
 #include <opencv2/highgui/highgui.hpp> 
@@ -24,12 +21,13 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QGraphicsScene>
-
+#include <QFileDialog>
+#include <QScrollArea>
+#include <QLayout>
+#include <QMessageBox>
 
 using namespace std;
 using namespace cv;
-
-namespace fs =  std::experimental::filesystem;
 
 class MorphologicalOperation {
 
@@ -46,13 +44,30 @@ class MorphologicalOperation {
         cv::Mat applyEquation(cv::Mat);
 
         void createKernel(int);
+};
 
+class Image {
+    public:
+        Image();
+        Image(cv::Mat, string, int, int);
+        cv::Mat image;
+        string title;
+        int r;
+        int c;
 };
 
 class MainImageGUI : public QMainWindow {
+
+    protected:
+        void resizeEvent(QResizeEvent *event) override;
+
     private slots:
         void handleButton();
+        void handleImageChooserButton();
+    
     private:
+        vector<Image> processedImages;
+
         MorphologicalOperation mo;
         cv::Mat original;
 
@@ -60,12 +75,16 @@ class MainImageGUI : public QMainWindow {
         QGridLayout *imageLayout;
         QWidget *widget;
         QWidget *imageWidget;
-        QPushButton *kernelButton;
         QLineEdit *kernelSize;
+        QLineEdit *imagePath;
         QGroupBox *imageBox;
 
+        QPushButton *kernelButton;
+        QPushButton *imageChooserButton;
+
     public:
-        MainImageGUI(string);
+        int w;
+        MainImageGUI();
         int init();
 
         void addImageToWidget(cv::Mat, QString, int, int);
@@ -73,4 +92,7 @@ class MainImageGUI : public QMainWindow {
         cv::Mat readImage(string);
         void displayImage(string, cv::Mat);
         void applyAll();
+
+        void showImages();
+        void clearLayout(QLayout *layout);
 };
