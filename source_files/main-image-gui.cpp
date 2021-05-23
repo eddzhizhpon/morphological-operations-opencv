@@ -46,7 +46,7 @@ int MainImageGUI::init(){
     kernelSize = new QLineEdit(kernelWidget);
     kernelLayout->addWidget(kernelSize);
     
-    kernelButton = new QPushButton("Validate", kernelWidget);
+    kernelButton = new QPushButton("Aplicar Operaciones", kernelWidget);
     connect(kernelButton, &QPushButton::released,this, &MainImageGUI::handleButton);
     kernelLayout->addWidget(kernelButton);
 
@@ -142,7 +142,7 @@ void MainImageGUI::handleButton(){
 
 void MainImageGUI::handleImageChooserButton(){
     imagePath->setText(QFileDialog::getOpenFileName(this,
-        tr("Seleccione una Imagen"), "../", tr("Image Files (*.png *.jpg *.bmp)")));
+        tr("Seleccione una Imagen"), "../", tr("Image Files (*.png *.jpg *.jpeg *.bmp)")));
 }
 
 void MainImageGUI::clearLayout(QLayout *layout) {
